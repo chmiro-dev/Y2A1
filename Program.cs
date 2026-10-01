@@ -119,11 +119,14 @@ class Program
         // Master Mixer & Output
         var masterMixer = new MixingSampleProvider(mixList);
 
+        // Pass through Soft Limiter with a 95% (-0.45 dBFS) peak safety ceiling
+        var safeMasterOutput = new SoftLimiterProvider(masterMixer, ceiling: 0.95f);
+
         using var enumerator = new MMDeviceEnumerator();
         var defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
 
         using var outputDevice = new WasapiOut(defaultDevice, AudioClientShareMode.Shared, useEventSync: true, latency: 50);
-        outputDevice.Init(masterMixer);
+        outputDevice.Init(safeMasterOutput);
         outputDevice.Play();
 
         Console.WriteLine("==================================================");

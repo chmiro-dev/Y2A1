@@ -7,6 +7,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!-- Exclude test files from being compiled in the main executable -->
+  <ItemGroup>
+    <Compile Remove="Y2A1.Tests\**" />
+    <EmbeddedResource Remove="Y2A1.Tests\**" />
+    <None Remove="Y2A1.Tests\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="NAudio" Version="3.1.0" />
     <PackageReference Include="NAudio.Wasapi" Version="3.1.0" />
